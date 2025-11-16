@@ -1,0 +1,1474 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>마음씨 브랜드 & 디자인 시스템</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    :root {
+      /* Colors */
+      --ms-color-bg:        #0F1730;
+      --ms-color-bg-soft:   #111827;
+      --ms-color-surface:   #FFFFFF;
+      --ms-color-surface-soft: #F6F9F8;
+
+      --ms-color-ink:       #0F1730;
+      --ms-color-ink-soft:  #4B5563;
+      --ms-color-ink-muted: #9CA3AF;
+
+      --ms-color-primary:   #2B7A78;  /* Deep Ivy */
+      --ms-color-primary-soft: #B6F0DB;
+      --ms-color-accent-mint: #7BDCB5;
+      --ms-color-accent-pink: #FF7AA2;
+      --ms-color-accent-yellow: #FFD47E;
+      --ms-color-accent-lilac: #C4B5FD;
+
+      --ms-color-border-soft:  #E5E7EB;
+      --ms-color-border-strong:#CBD5F5;
+
+      --ms-color-danger:   #EF4444;
+      --ms-color-warning:  #F59E0B;
+
+      /* Typography */
+      --ms-font-family: "Pretendard", "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --ms-font-size-xs:  11px;
+      --ms-font-size-sm:  13px;
+      --ms-font-size-md:  15px;
+      --ms-font-size-lg:  17px;
+      --ms-font-size-xl:  20px;
+      --ms-font-size-2xl: 24px;
+      --ms-line-height: 1.6;
+
+      /* Radius & shadow */
+      --ms-radius-xs: 8px;
+      --ms-radius-md: 14px;
+      --ms-radius-lg: 20px;
+      --ms-radius-pill: 999px;
+
+      --ms-shadow-soft: 0px 4px 14px rgba(15, 23, 42, 0.18);
+      --ms-shadow-elevated: 0px 10px 40px rgba(15, 23, 42, 0.35);
+    }
+
+    * { box-sizing:border-box; }
+
+    body {
+      margin:0;
+      font-family:var(--ms-font-family);
+      line-height:var(--ms-line-height);
+      background:radial-gradient(circle at top,#1e293b 0,#020617 55%);
+      color:#E5E7EB;
+    }
+
+    a { color:inherit; text-decoration:none; }
+
+    .layout {
+      min-height:100vh;
+      display:flex;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width:260px;
+      padding:20px 18px;
+      border-right:1px solid rgba(148,163,184,0.35);
+      background:linear-gradient(180deg,#020617,#020617 55%,#020617);
+      position:sticky;
+      top:0;
+      max-height:100vh;
+      overflow:auto;
+    }
+    .sidebar-logo {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:18px;
+    }
+    .sidebar-logo-icon {
+      width:34px;
+      height:34px;
+      border-radius:14px;
+      background:linear-gradient(135deg,#7BDCB5,#2B7A78);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+    }
+    .sidebar-logo-text-title {
+      font-size:16px;
+      font-weight:600;
+    }
+    .sidebar-logo-text-sub {
+      font-size:11px;
+      color:#9CA3AF;
+    }
+    .sidebar-section-title {
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.06em;
+      color:#64748B;
+      margin:14px 0 6px;
+    }
+    .nav-list {
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .nav-item a {
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 8px;
+      border-radius:10px;
+      font-size:13px;
+      color:#E5E7EB;
+      transition:background .15s, color .15s;
+    }
+    .nav-item a:hover {
+      background:rgba(148,163,184,0.12);
+    }
+    .nav-item a span.icon {
+      width:18px;
+      text-align:center;
+      opacity:.9;
+    }
+
+    /* Main Content */
+    .main {
+      flex:1;
+      padding:20px 28px 40px;
+      max-width:980px;
+      margin:0 auto;
+    }
+
+    .hero {
+      margin-bottom:32px;
+    }
+    .hero-badge {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 10px;
+      border-radius:999px;
+      background:rgba(148,163,184,0.1);
+      font-size:11px;
+      color:#9CA3AF;
+      border:1px solid rgba(148,163,184,0.3);
+      margin-bottom:10px;
+    }
+    .hero-title {
+      font-size:28px;
+      font-weight:650;
+      color:#E5E7EB;
+      margin:4px 0 6px;
+    }
+    .hero-subtitle {
+      font-size:14px;
+      color:#9CA3AF;
+      max-width:520px;
+    }
+    .hero-tags {
+      margin-top:12px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      font-size:11px;
+      color:#cbd5f5;
+    }
+    .hero-tag-pill {
+      padding:4px 9px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.4);
+      background:rgba(15,23,42,0.5);
+    }
+
+    .content-section {
+      margin-bottom:32px;
+    }
+    .content-kicker {
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      color:#9CA3AF;
+      margin-bottom:4px;
+    }
+    .content-title {
+      font-size:18px;
+      font-weight:600;
+      margin-bottom:10px;
+      color:#E5E7EB;
+    }
+    .content-p {
+      font-size:14px;
+      color:#CBD5F5;
+      margin:4px 0;
+    }
+
+    /* Cards & layout helpers */
+    .card-row {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:16px;
+      margin-top:8px;
+    }
+    .card {
+      background:rgba(15,23,42,0.92);
+      border-radius:18px;
+      border:1px solid rgba(148,163,184,0.3);
+      box-shadow:0 10px 35px rgba(15,23,42,0.65);
+      padding:14px 16px 16px;
+    }
+    .card-soft {
+      background:rgba(15,23,42,0.75);
+      border-radius:16px;
+      border:1px solid rgba(148,163,184,0.25);
+      padding:12px 14px;
+    }
+    .card-title {
+      font-size:14px;
+      font-weight:600;
+      margin-bottom:6px;
+      color:#E5E7EB;
+    }
+    .card-sub {
+      font-size:12px;
+      color:#9CA3AF;
+      margin-bottom:8px;
+    }
+
+    .pill {
+      display:inline-flex;
+      align-items:center;
+      justify-content:flex-start;
+      gap:6px;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.4);
+      font-size:11px;
+      color:#CBD5F5;
+    }
+
+    /* Color Swatches */
+    .color-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(158px,1fr));
+      gap:12px;
+      margin-top:8px;
+    }
+    .color-swatch {
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,0.25);
+      overflow:hidden;
+      background:rgba(15,23,42,0.85);
+    }
+    .color-swatch-top {
+      height:46px;
+    }
+    .color-swatch-body {
+      padding:8px 10px;
+      font-size:11px;
+      color:#CBD5F5;
+    }
+    .mono {
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:11px;
+    }
+
+    /* Typography sample */
+    .type-row {
+      display:grid;
+      grid-template-columns:2.3fr 1.7fr;
+      gap:14px;
+      align-items:flex-start;
+    }
+    .type-sample {
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid rgba(148,163,184,0.3);
+      background:rgba(15,23,42,0.9);
+      box-shadow:var(--ms-shadow-soft);
+      font-size:14px;
+    }
+    .type-sample h1 {
+      margin:0 0 4px;
+      font-size:22px;
+    }
+    .type-sample p {
+      margin:2px 0;
+      color:#CBD5F5;
+      font-size:13px;
+    }
+    .type-meta {
+      font-size:11px;
+      color:#9CA3AF;
+      margin-top:6px;
+    }
+
+    /* Token table */
+    .token-table {
+      width:100%;
+      border-collapse:collapse;
+      font-size:12px;
+      margin-top:6px;
+    }
+    .token-table th,
+    .token-table td {
+      border-bottom:1px solid rgba(148,163,184,0.3);
+      padding:5px 6px;
+      text-align:left;
+    }
+    .token-table th {
+      font-size:11px;
+      color:#94A3B8;
+      font-weight:500;
+    }
+    .token-table td.code {
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size:11px;
+      color:#E5E7EB;
+    }
+
+    /* Component previews */
+    .component-row {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:16px;
+      margin-top:8px;
+    }
+    .preview-box {
+      border-radius:16px;
+      background:radial-gradient(circle at top left,#1f2937,#020617);
+      border:1px solid rgba(148,163,184,0.45);
+      padding:14px;
+      box-shadow:var(--ms-shadow-soft);
+    }
+
+    /* Buttons */
+    .ms-btn {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      padding:0 16px;
+      height:40px;
+      border-radius:var(--ms-radius-md);
+      border:1px solid transparent;
+      font-size:13px;
+      font-weight:600;
+      font-family:var(--ms-font-family);
+      cursor:pointer;
+    }
+    .ms-btn-primary {
+      background:var(--ms-color-primary);
+      color:#FFFFFF;
+    }
+    .ms-btn-primary-soft {
+      background:rgba(123,220,181,0.18);
+      color:#DEF7EC;
+      border-color:rgba(190,242,217,0.35);
+    }
+    .ms-btn-ghost {
+      background:transparent;
+      border-color:var(--ms-color-border-soft);
+      color:#E5E7EB;
+    }
+
+    /* Inputs */
+    .ms-input-label {
+      font-size:11px;
+      color:#CBD5F5;
+      margin-bottom:3px;
+    }
+    .ms-input {
+      width:100%;
+      background:rgba(15,23,42,0.8);
+      border-radius:12px;
+      border:1px solid rgba(148,163,184,0.4);
+      padding:9px 12px;
+      font-size:13px;
+      color:#E5E7EB;
+      font-family:var(--ms-font-family);
+    }
+    .ms-input::placeholder {
+      color:#6B7280;
+    }
+
+    /* Chip */
+    .ms-chip {
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      padding:4px 9px;
+      border-radius:var(--ms-radius-pill);
+      font-size:11px;
+      border:1px solid rgba(148,163,184,0.4);
+      background:rgba(15,23,42,0.6);
+      color:#E5E7EB;
+    }
+    .ms-chip-positive {
+      background:#E7FFF6;
+      border-color:#BBF7D0;
+      color:#166534;
+    }
+    .ms-chip-negative {
+      background:#FEF2F2;
+      border-color:#FECACA;
+      color:#991B1B;
+    }
+
+    /* Toast preview */
+    .ms-toast {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:8px 10px;
+      background:#1F2B52;
+      color:#F6F9F8;
+      border-radius:12px;
+      border:1px solid #2A355A;
+      font-size:12px;
+      box-shadow:0 10px 20px rgba(0,0,0,.5);
+    }
+
+    /* Example: Home screen preview */
+    .phone-frame {
+      border-radius:28px;
+      padding:10px;
+      border:1px solid rgba(148,163,184,0.4);
+      background:radial-gradient(circle at top,#020617,#020617 60%,#020617);
+      width:280px;
+      margin:0 auto;
+      box-shadow:var(--ms-shadow-elevated);
+    }
+    .phone-inner {
+      border-radius:22px;
+      background:var(--ms-color-surface-soft);
+      padding:12px 12px 64px;
+      position:relative;
+      overflow:hidden;
+    }
+    .phone-header {
+      font-size:13px;
+      color:#6B7280;
+      margin-bottom:6px;
+    }
+    .phone-title {
+      font-size:16px;
+      font-weight:600;
+      margin-bottom:10px;
+      color:var(--ms-color-ink);
+    }
+    .phone-profile {
+      display:flex;
+      gap:10px;
+      padding:9px 10px;
+      background:#FFFFFF;
+      border-radius:16px;
+      margin-bottom:10px;
+      box-shadow:0 4px 12px rgba(148,163,184,0.35);
+    }
+    .phone-avatar {
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      background:#E5E7EB;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+    }
+    .phone-meta-main {
+      font-size:13px;
+      font-weight:500;
+      color:#111827;
+    }
+    .phone-meta-sub {
+      font-size:11px;
+      color:#6B7280;
+    }
+    .phone-btn-record {
+      margin-top:6px;
+      margin-bottom:10px;
+    }
+    .phone-progress-card {
+      background:#FFFFFF;
+      border-radius:16px;
+      padding:9px 10px;
+      margin-bottom:10px;
+      box-shadow:0 4px 12px rgba(148,163,184,0.28);
+    }
+    .phone-progress-bar {
+      height:6px;
+      border-radius:999px;
+      background:#E5E7EB;
+      overflow:hidden;
+      margin-top:6px;
+      margin-bottom:6px;
+    }
+    .phone-progress-fill {
+      height:100%;
+      width:40%;
+      background:linear-gradient(90deg,#7BDCB5,#2B7A78);
+    }
+    .phone-progress-meta {
+      font-size:10px;
+      display:flex;
+      justify-content:space-between;
+      color:#6B7280;
+    }
+    .phone-week-card {
+      background:#FFFFFF;
+      border-radius:16px;
+      padding:9px 10px;
+      box-shadow:0 4px 12px rgba(148,163,184,0.28);
+      margin-bottom:10px;
+    }
+    .phone-week-grid {
+      display:grid;
+      grid-template-columns:repeat(7,1fr);
+      gap:3px;
+      margin-top:4px;
+    }
+    .phone-week-label {
+      font-size:9px;
+      text-align:center;
+      color:#9CA3AF;
+    }
+    .phone-week-emoji {
+      font-size:13px;
+      width:24px;
+      height:24px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin:0 auto;
+      background:#F3F4F6;
+    }
+    .phone-community {
+      margin-top:6px;
+      background:#FFFFFF;
+      border-radius:16px;
+      padding:9px 10px;
+      display:flex;
+      gap:8px;
+      box-shadow:0 4px 12px rgba(148,163,184,0.3);
+    }
+    .phone-community-icon {
+      width:32px;
+      height:32px;
+      border-radius:999px;
+      background:#B6F0DB;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+    }
+    .phone-community-main {
+      font-size:12px;
+      font-weight:500;
+      color:#111827;
+    }
+    .phone-community-sub {
+      font-size:10px;
+      color:#6B7280;
+    }
+    .phone-tabbar {
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:40px;
+      background:#FFFFFF;
+      border-top:1px solid #E5E7EB;
+      display:flex;
+      justify-content:space-around;
+      align-items:center;
+    }
+    .phone-tab-item {
+      font-size:9px;
+      color:#9CA3AF;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:1px;
+    }
+    .phone-tab-item span.icon {
+      font-size:14px;
+    }
+    .phone-tab-item.active {
+      color:#2B7A78;
+    }
+
+    /* Responsive */
+    @media (max-width:900px) {
+      .layout {
+        flex-direction:column;
+      }
+      .sidebar {
+        position:static;
+        width:100%;
+        max-height:none;
+        border-right:none;
+        border-bottom:1px solid rgba(148,163,184,0.35);
+        display:flex;
+        flex-direction:column;
+        gap:8px;
+      }
+      .main {
+        padding:18px 16px 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <!-- Sidebar / Navigation -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-icon">🌱</div>
+      <div>
+        <div class="sidebar-logo-text-title">마음씨 Brand</div>
+        <div class="sidebar-logo-text-sub">브랜드 & 디자인 시스템 v1.0</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="sidebar-section-title">Overview</div>
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a href="#brand">
+            <span class="icon">✨</span>
+            <span>브랜드 아이덴티티</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#tone">
+            <span class="icon">💬</span>
+            <span>톤 & 보이스</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="sidebar-section-title">Foundation</div>
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a href="#colors">
+            <span class="icon">🎨</span>
+            <span>컬러 시스템</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#type">
+            <span class="icon">✏️</span>
+            <span>타이포그래피</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#tokens">
+            <span class="icon">🧩</span>
+            <span>디자인 토큰</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="sidebar-section-title">Components</div>
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a href="#components-core">
+            <span class="icon">📦</span>
+            <span>코어 컴포넌트</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#components-maeum">
+            <span class="icon">🌿</span>
+            <span>마음씨 전용 컴포넌트</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="sidebar-section-title">Example</div>
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a href="#example-home">
+            <span class="icon">🏡</span>
+            <span>홈 화면 예시</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#example-record">
+            <span class="icon">📝</span>
+            <span>감정 기록 화면</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#example-forest">
+            <span class="icon">🪴</span>
+            <span>공감숲 화면</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#example-profile">
+            <span class="icon">👤</span>
+            <span>마이프로필 화면</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge">
+        🌱 마음씨 / Maeumssi
+        <span>Brand & Design System</span>
+      </div>
+      <div class="hero-title">감정의 씨앗이 꽃이 되는 경험을 설계합니다.</div>
+      <div class="hero-subtitle">
+        감정기록 · 감정꽃 시각화 · 공감 숲 · 내 정원까지,
+        마음씨의 전반적인 브랜드 아이덴티티와 화면 디자인 시스템을 정리한 문서입니다.
+      </div>
+      <div class="hero-tags">
+        <span class="hero-tag-pill">정서 안전</span>
+        <span class="hero-tag-pill">감정 성장</span>
+        <span class="hero-tag-pill">공감 기반 경험</span>
+        <span class="hero-tag-pill">모바일 앱 우선</span>
+      </div>
+    </section>
+
+    <!-- Brand Identity -->
+    <section id="brand" class="content-section">
+      <div class="content-kicker">Brand Identity</div>
+      <h2 class="content-title">브랜드 아이덴티티</h2>
+      <p class="content-p">
+        <strong>“마음의 작은 씨앗이 감정기록을 통해 꽃이 되는 앱”</strong><br>
+        마음씨는 감정의 변화 자체를 문제로 보지 않고, 씨앗 → 새싹 → 잎 → 봉오리 → 꽃이라는
+        성장 과정으로 재해석합니다.
+      </p>
+      <div class="card-row">
+        <div class="card-soft">
+          <div class="card-title">브랜드가 전하는 감정</div>
+          <div class="card-sub">사용자가 앱을 쓸 때 느껴야 하는 감정 톤</div>
+          <ul style="padding-left:17px;font-size:13px;color:#CBD5F5;">
+            <li>고요함 · 따뜻함</li>
+            <li>안전함 · 자기돌봄</li>
+            <li>성찰 · 성장</li>
+          </ul>
+        </div>
+        <div class="card-soft">
+          <div class="card-title">핵심 키워드</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;font-size:11px;">
+            <span class="pill">🌱 씨앗</span>
+            <span class="pill">🌿 성장</span>
+            <span class="pill">🌸 개화</span>
+            <span class="pill">💧 공감</span>
+            <span class="pill">정원</span>
+            <span class="pill">기록</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tone & Voice -->
+    <section id="tone" class="content-section">
+      <div class="content-kicker">Tone & Voice</div>
+      <h2 class="content-title">톤 & 보이스 (UX Writing)</h2>
+      <p class="content-p">
+        마음씨의 문장은 부드럽고, 따뜻하며, 강요하지 않습니다.<br>
+        “~해볼까요?”, “오늘도 수고했어요.”처럼 사용자를 초대하지만 재촉하지 않는 톤을 유지합니다.
+      </p>
+      <div class="card-row">
+        <div class="card-soft">
+          <div class="card-title">Do · 이렇게 말합니다</div>
+          <ul style="padding-left:17px;font-size:13px;color:#CBD5F5;margin-top:4px;">
+            <li>“오늘의 감정을 가볍게 적어볼까요?”</li>
+            <li>“이 감정도 당신의 일부예요.”</li>
+            <li>“지금 당장 하지 않아도 괜찮아요.”</li>
+          </ul>
+        </div>
+        <div class="card-soft">
+          <div class="card-title">Don’t · 이렇게 말하지 않습니다</div>
+          <ul style="padding-left:17px;font-size:13px;color:#CBD5F5;margin-top:4px;">
+            <li>“지금 바로 기록하세요!”</li>
+            <li>“이 감정은 좋지 않아요.”</li>
+            <li>“이렇게 느끼면 안 돼요.”</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Colors -->
+    <section id="colors" class="content-section">
+      <div class="content-kicker">Foundation</div>
+      <h2 class="content-title">컬러 시스템</h2>
+      <p class="content-p">
+        마음씨의 색은 정원·새벽·깨끗한 공기를 기반으로 설계됩니다.
+        메인 컬러는 딥 네이비와 아이비 그린, 그리고 민트입니다.
+      </p>
+      <div class="color-grid">
+        <div class="color-swatch">
+          <div class="color-swatch-top" style="background:#2B7A78;"></div>
+          <div class="color-swatch-body">
+            <div style="font-size:12px;">Primary / Deep Ivy</div>
+            <div class="mono">#2B7A78</div>
+            <div style="font-size:11px;color:#9CA3AF;">주요 CTA, 핵심 강조</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-top" style="background:#7BDCB5;"></div>
+          <div class="color-swatch-body">
+            <div style="font-size:12px;">Accent / Maeum Mint</div>
+            <div class="mono">#7BDCB5</div>
+            <div style="font-size:11px;color:#9CA3AF;">성장, 긍정, 개화 상태</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-top" style="background:#FF7AA2;"></div>
+          <div class="color-swatch-body">
+            <div style="font-size:12px;">Accent / Blossom Pink</div>
+            <div class="mono">#FF7AA2</div>
+            <div style="font-size:11px;color:#9CA3AF;">알림, 주목, 하이라이트</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-top" style="background:#F6F9F8;"></div>
+          <div class="color-swatch-body">
+            <div style="font-size:12px;">Background / Soft White</div>
+            <div class="mono">#F6F9F8</div>
+            <div style="font-size:11px;color:#9CA3AF;">앱 기본 배경</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography -->
+    <section id="type" class="content-section">
+      <div class="content-kicker">Foundation</div>
+      <h2 class="content-title">타이포그래피</h2>
+      <p class="content-p">
+        기본 폰트는 <strong>Pretendard</strong> 혹은 <strong>Noto Sans KR</strong>를 사용하며,
+        모바일 가독성을 최우선으로 하는 단정한 산세리프 계열을 선택합니다.
+      </p>
+      <div class="type-row">
+        <div class="type-sample">
+          <h1>오늘의 감정을 기록해볼까요?</h1>
+          <p>수연님, 오늘 마음은 어땠나요? 편안한 자리에서 천천히 떠올려봐요.</p>
+          <p style="margin-top:6px;">기록이 마음을 조금 더 가볍게 해줄 수도 있어요.</p>
+          <div class="type-meta">
+            H1: 22px / 600 · Body: 13~15px / 400~500 · Line-height: 1.6
+          </div>
+        </div>
+        <div class="card-soft">
+          <div class="card-title">텍스트 스타일 요약</div>
+          <table class="token-table">
+            <thead>
+              <tr>
+                <th>역할</th>
+                <th>크기</th>
+                <th>Weight</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>페이지 타이틀</td>
+                <td>20–24px</td>
+                <td>600–700</td>
+              </tr>
+              <tr>
+                <td>섹션 타이틀</td>
+                <td>17px</td>
+                <td>600</td>
+              </tr>
+              <tr>
+                <td>본문</td>
+                <td>15px</td>
+                <td>400–500</td>
+              </tr>
+              <tr>
+                <td>캡션/라벨</td>
+                <td>11–13px</td>
+                <td>400–500</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tokens -->
+    <section id="tokens" class="content-section">
+      <div class="content-kicker">Foundation</div>
+      <h2 class="content-title">디자인 토큰</h2>
+      <p class="content-p">
+        컬러, 타이포, 간격, 라운드 등 모든 스타일은 토큰으로 선언하여
+        앱과 웹에서 일관되게 사용합니다.
+      </p>
+      <div class="card">
+        <div class="card-title">CSS 변수 예시</div>
+        <div class="card-sub">실제 구현 시 :root에 선언</div>
+        <pre class="mono" style="font-size:11px;color:#E5E7EB;white-space:pre-wrap;margin:0;">
+:root {
+  --ms-color-primary: #2B7A78;
+  --ms-color-accent-mint: #7BDCB5;
+  --ms-color-ink: #0F1730;
+  --ms-color-ink-muted: #9CA3AF;
+
+  --ms-font-family: "Pretendard", "Noto Sans KR", system-ui;
+  --ms-font-size-sm: 13px;
+  --ms-font-size-md: 15px;
+  --ms-font-size-lg: 17px;
+
+  --ms-radius-md: 14px;
+  --ms-radius-lg: 20px;
+  --ms-radius-pill: 999px;
+
+  --ms-shadow-soft: 0px 4px 14px rgba(15, 23, 42, 0.18);
+}
+        </pre>
+      </div>
+    </section>
+
+    <!-- Core Components -->
+    <section id="components-core" class="content-section">
+      <div class="content-kicker">Components</div>
+      <h2 class="content-title">코어 컴포넌트</h2>
+      <p class="content-p">
+        버튼, 인풋, 칩, 토스트 등 앱 전체에서 공통으로 사용하는 기본 컴포넌트입니다.
+      </p>
+
+      <div class="component-row">
+        <!-- Buttons -->
+        <div class="preview-box">
+          <div class="card-title">버튼</div>
+          <div class="card-sub">Primary / Soft / Ghost</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;">
+            <button class="ms-btn ms-btn-primary">🌱 오늘의 감정 기록하기</button>
+            <button class="ms-btn ms-btn-primary-soft">정원소식 살펴보기</button>
+            <button class="ms-btn ms-btn-ghost">나중에 할래요</button>
+          </div>
+        </div>
+
+        <!-- Input -->
+        <div class="preview-box">
+          <div class="card-title">입력 필드</div>
+          <div class="card-sub">감정 기록, 닉네임, 문의 등</div>
+          <label class="ms-input-label">오늘의 감정 한 줄 메모</label>
+          <input class="ms-input" placeholder="지금 마음에 가장 가까운 생각을 짧게 적어보세요.">
+        </div>
+      </div>
+
+      <div class="component-row" style="margin-top:12px;">
+        <!-- Chip -->
+        <div class="preview-box">
+          <div class="card-title">칩 / 감정 태그</div>
+          <div class="card-sub">감정/카테고리/상태 표현</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+            <span class="ms-chip-positive">🙂 평온</span>
+            <span class="ms-chip-positive">😊 기쁨</span>
+            <span class="ms-chip-negative">😟 불안</span>
+            <span class="ms-chip">회사 · 일상</span>
+          </div>
+        </div>
+
+        <!-- Toast -->
+        <div class="preview-box">
+          <div class="card-title">토스트</div>
+          <div class="card-sub">하단 중앙, 2초 노출</div>
+          <div style="margin-top:8px;">
+            <div class="ms-toast">
+              <span>정원소식을 저장했어요</span><span>🌿</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Maeum Components -->
+    <section id="components-maeum" class="content-section">
+      <div class="content-kicker">Components</div>
+      <h2 class="content-title">마음씨 전용 컴포넌트</h2>
+      <p class="content-p">
+        감정기록과 감정꽃 시각화를 위해 마음씨에서만 사용하는 전용 컴포넌트들입니다.
+      </p>
+
+      <div class="component-row">
+        <!-- Emotion summary -->
+        <div class="preview-box">
+          <div class="card-title">홈 상단 감정 요약</div>
+          <div class="card-sub">프로필 + 오늘의 감정 안내</div>
+          <div class="phone-profile" style="box-shadow:none;background:#FFFFFF;">
+            <div class="phone-avatar">🌱</div>
+            <div>
+              <div class="phone-meta-main">수연님, 오늘 마음은 어땠나요?</div>
+              <div class="phone-meta-sub">편안한 자리에서 천천히 떠올려봐요.</div>
+              <div class="phone-meta-sub" style="margin-top:2px;color:#9CA3AF;">어제의 감정: 🙂 평온</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Growth gauge -->
+        <div class="preview-box">
+          <div class="card-title">감정꽃 성장 게이지</div>
+          <div class="card-sub">씨앗 → 새싹 → 잎 → 봉오리 → 꽃</div>
+          <div class="phone-progress-card" style="margin-bottom:0;">
+            <div style="font-size:11px;color:#6B7280;">감정꽃 성장 상태</div>
+            <div class="phone-progress-bar">
+              <div class="phone-progress-fill"></div>
+            </div>
+            <div class="phone-progress-meta">
+              <span>연속 기록 3일째</span>
+              <span>봉오리까지 2일 남았어요 🌸</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="component-row" style="margin-top:12px;">
+        <!-- Weekly archive -->
+        <div class="preview-box">
+          <div class="card-title">주간 감정 아카이브</div>
+          <div class="card-sub">요일별 감정 이모지</div>
+          <div class="phone-week-card" style="margin-bottom:0;">
+            <div style="font-size:11px;color:#6B7280;">이번 주 마음 아카이브</div>
+            <div class="phone-week-grid">
+              <div class="phone-week-label">월</div>
+              <div class="phone-week-label">화</div>
+              <div class="phone-week-label">수</div>
+              <div class="phone-week-label">목</div>
+              <div class="phone-week-label">금</div>
+              <div class="phone-week-label">토</div>
+              <div class="phone-week-label">일</div>
+
+              <div class="phone-week-emoji">🙂</div>
+              <div class="phone-week-emoji">😟</div>
+              <div class="phone-week-emoji">😀</div>
+              <div class="phone-week-emoji">-</div>
+              <div class="phone-week-emoji">😮</div>
+              <div class="phone-week-emoji">🙂</div>
+              <div class="phone-week-emoji">😴</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Community card -->
+        <div class="preview-box">
+          <div class="card-title">공감숲 바로가기 카드</div>
+          <div class="card-sub">홈에서 커뮤니티로 연결</div>
+          <div class="phone-community" style="margin-top:4px;">
+            <div class="phone-community-icon">🪴</div>
+            <div>
+              <div class="phone-community-main">공감숲으로 산책 가기</div>
+              <div class="phone-community-sub">
+                다른 사람들의 마음을 살짝 들여다보고, 작은 공감을 나눠보세요.
+              </div>
+              <div class="phone-community-sub" style="margin-top:3px;color:#4B5563;">
+                지금 공감꽃이 128송이 피어 있어요 🌸
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Home Example -->
+    <section id="example-home" class="content-section">
+      <div class="content-kicker">Example</div>
+      <h2 class="content-title">홈 화면 예시</h2>
+      <p class="content-p">
+        지금까지 정의한 브랜딩과 디자인 시스템을 적용한
+        <strong>마음씨 홈 화면 모바일 시안</strong>입니다.
+      </p>
+      <div class="card-row">
+        <div class="card-soft">
+          <div class="card-title">홈 IA 구조</div>
+          <div class="card-sub">정보 구조</div>
+          <ul style="padding-left:17px;font-size:13px;color:#CBD5F5;">
+            <li>상단: 프로필 요약 + 인사 문구</li>
+            <li>메인 CTA: 오늘의 감정 기록하기</li>
+            <li>감정꽃 성장 게이지</li>
+            <li>주간 감정 아카이브</li>
+            <li>공감숲 바로가기 카드</li>
+            <li>하단 탭바 (홈/기록/공감숲/내 정원)</li>
+          </ul>
+        </div>
+        <div class="card-soft">
+          <div class="card-title">UX Writing 예시</div>
+          <div class="card-sub">홈에서 사용되는 문구</div>
+          <ul style="padding-left:17px;font-size:13px;color:#CBD5F5;">
+            <li>“수연님, 오늘 마음은 어땠나요?”</li>
+            <li>“편안한 자리에서 천천히 떠올려봐요.”</li>
+            <li>“연속 기록 3일째, 봉오리까지 2일 남았어요 🌸”</li>
+            <li>“공감숲으로 산책 가기”</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;display:flex;justify-content:center;">
+        <div class="phone-frame">
+          <div class="phone-inner">
+            <div class="phone-header">마음, 씨 · 홈</div>
+            <div class="phone-title">당신의 마음을 가꾸는 작은 정원</div>
+
+            <div class="phone-profile">
+              <div class="phone-avatar">🌱</div>
+              <div>
+                <div class="phone-meta-main">수연님, 오늘 마음은 어땠나요?</div>
+                <div class="phone-meta-sub">편안한 자리에서 천천히 떠올려봐요.</div>
+              </div>
+            </div>
+
+            <div class="phone-btn-record">
+              <button class="ms-btn ms-btn-primary" style="width:100%;height:42px;font-size:13px;">
+                🌱 오늘의 감정 기록하기
+              </button>
+            </div>
+
+            <div class="phone-progress-card">
+              <div style="font-size:11px;color:#6B7280;">감정꽃 성장 상태</div>
+              <div class="phone-progress-bar">
+                <div class="phone-progress-fill"></div>
+              </div>
+              <div class="phone-progress-meta">
+                <span>연속 기록 3일째</span>
+                <span>봉오리까지 2일 남았어요 🌸</span>
+              </div>
+            </div>
+
+            <div class="phone-week-card">
+              <div style="font-size:11px;color:#6B7280;">이번 주 마음 아카이브</div>
+              <div class="phone-week-grid">
+                <div class="phone-week-label">월</div>
+                <div class="phone-week-label">화</div>
+                <div class="phone-week-label">수</div>
+                <div class="phone-week-label">목</div>
+                <div class="phone-week-label">금</div>
+                <div class="phone-week-label">토</div>
+                <div class="phone-week-label">일</div>
+
+                <div class="phone-week-emoji">🙂</div>
+                <div class="phone-week-emoji">😟</div>
+                <div class="phone-week-emoji">😀</div>
+                <div class="phone-week-emoji">-</div>
+                <div class="phone-week-emoji">😮</div>
+                <div class="phone-week-emoji">🙂</div>
+                <div class="phone-week-emoji">😴</div>
+              </div>
+            </div>
+
+            <div class="phone-community">
+              <div class="phone-community-icon">🪴</div>
+              <div>
+                <div class="phone-community-main">공감숲으로 산책 가기</div>
+                <div class="phone-community-sub">
+                  다른 사람들의 마음을 살짝 들여다보고, 작은 공감을 나눠보세요.
+                </div>
+              </div>
+            </div>
+
+            <div class="phone-tabbar">
+              <div class="phone-tab-item active">
+                <span class="icon">🏡</span><span>홈</span>
+              </div>
+              <div class="phone-tab-item">
+                <span class="icon">📝</span><span>기록</span>
+              </div>
+              <div class="phone-tab-item">
+                <span class="icon">🪴</span><span>공감숲</span>
+              </div>
+              <div class="phone-tab-item">
+                <span class="icon">🌸</span><span>내 정원</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Record Example -->
+    <section id="example-record" class="content-section">
+      <div class="content-kicker">Example</div>
+      <h2 class="content-title">감정 기록 화면 예시</h2>
+      <p class="content-p">
+        대표 감정 선택 → 텍스트 기록 → 사진 첨부(선택) → 공개 설정 → 저장까지
+        실제 설계된 플로우를 축약해 보여주는 예시입니다.
+      </p>
+      <div class="card-row">
+        <div class="card-soft">
+          <div class="card-title">감정 기록 IA 구조</div>
+          <div class="card-sub">기능 순서</div>
+          <ul style="padding-left:17px;font-size:13px;color:#CBD5F5;">
+            <li>1) 오늘의 대표 감정 선택 (필수)</li>
+            <li>2) 감정 텍스트 기록 (필수, 5자 이상)</li>
+            <li>3) 사진 첨부 (선택)</li>
+            <li>4) 공개 설정 (나만 보기 / 공감숲 공개)</li>
+            <li>5) 기록 저장 버튼</li>
+          </ul>
+        </div>
+        <div class="card-soft">
+          <div class="card-title">UX Writing 예시</div>
+          <div class="card-sub">감정기록 화면 문구</div>
+          <ul style="padding-left:17px;font-size:13px;color:#CBD5F5;">
+            <li>“오늘 마음에 가장 가까운 감정을 골라볼까요?”</li>
+            <li>“길지 않아도 괜찮아요. 한 줄이면 충분해요.”</li>
+            <li>“이 기록은 나만 볼 수도, 공감숲에 나눌 수도 있어요.”</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;display:flex;justify-content:center;">
+        <div class="phone-frame">
+          <div class="phone-inner">
+            <div class="phone-header">감정 기록</div>
+            <div class="phone-title">오늘의 감정을 남겨볼까요?</div>
+
+            <div style="font-size:11px;color:#6B7280;margin-bottom:4px;">1. 오늘 대표 감정</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
+              <span class="ms-chip-positive">😊 기쁨</span>
+              <span class="ms-chip">🙂 평온</span>
+              <span class="ms-chip">😟 불안</span>
+              <span class="ms-chip">😢 슬픔</span>
+            </div>
+
+            <div style="font-size:11px;color:#6B7280;margin-bottom:4px;">2. 감정 기록</div>
+            <div class="ms-input" style="height:70px;display:flex;align-items:flex-start;">
+              오늘 있었던 일 중에 마음에 남는 순간이 있다면,
+              그때의 생각과 감정을 솔직하게 적어보세요.
+            </div>
+
+            <div style="font-size:11px;color:#6B7280;margin:8px 0 4px;">3. 사진 첨부 (선택)</div>
+            <div style="display:flex;gap:6px;margin-bottom:8px;">
+              <span class="ms-chip">＋ 사진 추가</span>
+              <span style="font-size:10px;color:#9CA3AF;align-self:center;">오늘 풍경이나 물건도 함께 남길 수 있어요.</span>
+            </div>
+
+            <div style="font-size:11px;color:#6B7280;margin-bottom:4px;">4. 공개 설정</div>
+            <div style="display:flex;gap:6px;margin-bottom:10px;">
+              <span class="ms-chip-positive">🔒 나만 보기</span>
+              <span class="ms-chip">🪴 공감숲에 공개</span>
+            </div>
+
+            <div style="margin-bottom:10px;">
+              <button class="ms-btn ms-btn-primary" style="width:100%;height:42px;font-size:13px;">
+                기록 저장하기
+              </button>
+            </div>
+
+            <div class="phone-tabbar">
+              <div class="phone-tab-item">
+                <span class="icon">🏡</span><span>홈</span>
+              </div>
+              <div class="phone-tab-item active">
+                <span class="icon">📝</span><span>기록</span>
+              </div>
+              <div class="phone-tab-item">
+                <span class="icon">🪴</span><span>공감숲</span>
+              </div>
+              <div class="phone-tab-item">
+                <span class="icon">🌸</span><span>내 정원</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Forest Example -->
+    <section id="example-forest" class="content-section">
+      <div class="content-kicker">Example</div>
+      <h2 class="content-title">공감숲 화면 예시</h2>
+      <p class="content-p">
+        카테고리 탭, 감정 피드 카드(텍스트형 / 텍스트+이미지형), 공감·신고 기능을
+        한 화면에서 확인할 수 있는 공감숲 리스트 예시입니다.
+      </p>
+      <div class="card-row">
+        <div class="card-soft">
+          <div class="card-title">공감숲 IA 구조</div>
+          <div class="card-sub">상단 필터 + 피드 리스트</div>
+          <ul style="padding-left:17px;font-size:13px;color:#CBD5F5;">
+            <li>카테고리 탭 (전체 / 일상 / 고민 / 연애 / 기타)</li>
+            <li>정렬 (기본 최신순, BEST 탭 존재 가능)</li>
+            <li>피드 카드 (대표 문장 + 일부 내용 + 공감 수)</li>
+            <li>공감 버튼 / 신고 버튼</li>
+            <li>상세로 진입 시 2타입 화면 (텍스트 / 텍스트+이미지)</li>
+          </ul>
+        </div>
+        <div class="card-soft">
+          <div class="card-title">UX Writing 예시</div>
+          <div class="card-sub">공감숲에서 사용하는 문구</div>
+          <ul style="padding-left:17px;font-size:13px;color:#CBD5F5;">
+            <li>“이 마음에 공감한다면, 작은 물 한 컵을 건네볼까요?”</li>
+            <li>“여기는 서로의 경험을 평가하지 않는 숲이에요.”</li>
+            <li>“불편한 글을 발견하면 알려주세요. 정원을 함께 지켜요.”</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;display:flex;justify-content:center;">
+        <div class="phone-frame">
+          <div class="phone-inner">
+            <div class="phone-header">공감숲</div>
+            <div class="phone-title">다른 마음들을 산책하는 숲</div>
+
+            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
+              <span class="ms-chip-positive">전체</span>
+              <span class="ms-chip">일상</span>
+              <span class="ms-chip">고민</span>
+              <span class="ms-chip">연애</span>
+              <span class="ms-chip">기타</span>
+            </div>
+
+            <div style="background:#FFFFFF;border-radius:16px;padding:8px 10px;margin-bottom:8px;box-shadow:0 4px 12px rgba(148,163,184,0.28);">
+              <div style="font-size:11px;color:#6B7280;margin-bottom:3px;">[연애 · 5분 전 · 익명]</div>
+              <div style="font-size:12px;color:#111827;margin-bottom:4px;">
+                좋아하는 마음을 계속 숨기고만 있었는데, 오늘은 용기 내서 한 마디 해봤어요.
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:10px;color:#6B7280;">
+                <span>💧 23 · 공감하기</span>
+                <span>신고 · ⋯</span>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF;border-radius:16px;padding:8px 10px;box-shadow:0 4px 12px rgba(148,163,184,0.28);">
+              <div style="font-size:11px;color:#6B7280;margin-bottom:3px;">[일상 + 사진 · 1시간 전 · 익명]</div>
+              <div style="font-size:12px;color:#111827;margin-bottom:4px;">
+                오늘 회사 앞 카페에서 본 하늘이 예뻐서 찍어왔어요.
+              </div>
+              <div style="border-radius:10px;background:#E5E7EB;height:46px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#6B7280;margin-bottom:4px;">
+                이미지 미리보기
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:10px;color:#6B7280;">
+                <span>💧 41 · 공감하기</span>
+                <span>신고 · ⋯</span>
+              </div>
+            </div>
+
+            <div class="phone-tabbar">
+              <div class="phone-tab-item">
+                <span class="icon">🏡</span><span>홈</span>
+              </div>
+              <div class="phone-tab-item">
+                <span class="icon">📝</span><span>기록</span>
+              </div>
+              <div class="phone-tab-item active">
+                <span class="icon">🪴</span><span>공감숲</span>
+              </div>
+              <div class="phone-tab-item">
+                <span class="icon">🌸</span><span>내 정원</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- My Profile Example -->
+    <section id="example-profile" class="content-section">
+      <div class="content-kicker">Example</div>
+      <h2 class="content-title">마이프로필 화면 예시</h2>
+      <p class="content-p">
+        상단 프로필 영역(아바타, 닉네임, MBTI, 기록/공감/개화 배지)과
+        프로필 설정, 정원 관련 메뉴, 잠금·문의·탈퇴 플로우까지 포함한 마이페이지 예시입니다.
+      </p>
+      <div class="card-row">
+        <div class="card-soft">
+          <div class="card-title">마이프로필 IA 구조</div>
+          <div class="card-sub">기능 목록</div>
+          <ul style="padding-left:17px;font-size:13px;color:#CBD5F5;">
+            <li>상단 프로필 (아바타, 닉네임 ✏, MBTI, 통계 배지)</li>
+            <li>프로필 설정 (MBTI, 사진 업로드, 기본 이모티콘)</li>
+            <li>알림 설정</li>
+            <li>감정꽃 앨범 / 감정 기록 모아보기</li>
+            <li>화면 잠금 (PIN)</li>
+            <li>고객 문의, 회원탈퇴, 로그아웃</li>
+          </ul>
+        </div>
+        <div class="card-soft">
+          <div class="card-title">UX Writing 예시</div>
+          <div class="card-sub">마이프로필 문구</div>
+          <ul style="padding-left:17px;font-size:13px;color:#CBD5F5;">
+            <li>“오늘도 한 컵의 물을 잊지 마세요 💧”</li>
+            <li>“지금 마음을 어떻게 돌보고 싶은지, 설정에서 골라보세요.”</li>
+            <li>“언제든지 정원을 떠날 수 있지만, 당신의 기록은 소중했어요.”</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;display:flex;justify-content:center;">
+        <div class="phone-frame">
+          <div class="phone-inner">
+            <div class="phone-header">마이프로필</div>
+            <div class="phone-title">오늘도 한 컵의 물을 잊지 마세요 💧</div>
+
+            <div class="phone-profile" style="margin-bottom:8px;">
+              <div class="phone-avatar">🙂</div>
+              <div>
+                <div class="phone-meta-main">수연 ✏</div>
+                <div class="phone-meta-sub">MBTI ENFJ · 감정꽃 2개 개화</div>
+                <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;font-size:10px;">
+                  <span class="ms-chip">📝 기록 8</span>
+                  <span class="ms-chip">💧 공감 4</span>
+                  <span class="ms-chip">🌸 개화 2</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF;border-radius:16px;padding:8px 10px;box-shadow:0 4px 12px rgba(148,163,184,0.28);margin-bottom:8px;">
+              <div style="font-size:11px;color:#6B7280;margin-bottom:4px;">프로필 & 정원</div>
+              <ul style="list-style:none;padding-left:0;margin:0;font-size:11px;color:#111827;">
+                <li>・ 프로필 설정 (MBTI, 사진, 기본 이모티콘)</li>
+                <li>・ 감정꽃 앨범</li>
+                <li>・ 감정 기록 모아보기</li>
+              </ul>
+            </div>
+
+            <div style="background:#FFFFFF;border-radius:16px;padding:8px 10px;box-shadow:0 4px 12px rgba(148,163,184,0.28);margin-bottom:8px;">
+              <div style="font-size:11px;color:#6B7280;margin-bottom:4px;">앱 설정</div>
+              <ul style="list-style:none;padding-left:0;margin:0;font-size:11px;color:#111827;">
+                <li>・ 알림 설정</li>
+                <li>・ 화면 잠금 (PIN)</li>
+              </ul>
+            </div>
+
+            <div style="background:#FFFFFF;border-radius:16px;padding:8px 10px;box-shadow:0 4px 12px rgba(148,163,184,0.28);">
+              <div style="font-size:11px;color:#6B7280;margin-bottom:4px;">고객지원 & 계정</div>
+              <ul style="list-style:none;padding-left:0;margin:0;font-size:11px;color:#111827;">
+                <li>・ 고객 문의</li>
+                <li>・ 회원탈퇴</li>
+                <li>・ 로그아웃</li>
+              </ul>
+            </div>
+
+            <div class="phone-tabbar">
+              <div class="phone-tab-item">
+                <span class="icon">🏡</span><span>홈</span>
+              </div>
+              <div class="phone-tab-item">
+                <span class="icon">📝</span><span>기록</span>
+              </div>
+              <div class="phone-tab-item">
+                <span class="icon">🪴</span><span>공감숲</span>
+              </div>
+              <div class="phone-tab-item active">
+                <span class="icon">🌸</span><span>내 정원</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+</body>
+</html>
